@@ -8,7 +8,7 @@ from app.database import Base, get_db
 from app import models
 
 # 🔥 Use SQLite for testing (no Postgres dependency)
-TEST_DATABASE_URL = "postgresql://user:userpassword@db:5432/mydb"
+TEST_DATABASE_URL = "postgresql://user:userpassword@localhost:5432/mydb"
 
 engine = create_engine(TEST_DATABASE_URL, connect_args={"check_same_thread": False})
 
