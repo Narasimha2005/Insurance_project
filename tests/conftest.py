@@ -1,4 +1,3 @@
-import os
 import pytest
 from fastapi.testclient import TestClient
 from sqlalchemy import create_engine
@@ -9,7 +8,7 @@ from app.database import Base, get_db
 from app import models
 
 # 🔥 Use SQLite for testing (no Postgres dependency)
-TEST_DATABASE_URL = os.getenv("DATABASE_URL")
+TEST_DATABASE_URL = "postgresql://user:userpassword@db:5432/mydb"
 
 engine = create_engine(TEST_DATABASE_URL, connect_args={"check_same_thread": False})
 
