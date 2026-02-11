@@ -7,20 +7,12 @@ from app.main import app
 from app.database import Base, get_db
 from app import models
 
-
 # 🔥 Use SQLite for testing (no Postgres dependency)
 TEST_DATABASE_URL = "sqlite:///./test.db"
 
-engine = create_engine(
-    TEST_DATABASE_URL,
-    connect_args={"check_same_thread": False}
-)
+engine = create_engine(TEST_DATABASE_URL, connect_args={"check_same_thread": False})
 
-TestingSessionLocal = sessionmaker(
-    autocommit=False,
-    autoflush=False,
-    bind=engine
-)
+TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 
 @pytest.fixture(scope="session", autouse=True)
