@@ -7,8 +7,8 @@ from app.main import app
 from app.database import Base, get_db
 from app import models
 
-# 🔥 Use SQLite for testing (no Postgres dependency)
-TEST_DATABASE_URL = "postgresql://user:userpassword@localhost:5432/mydb"
+# ✅ Use SQLite for isolated tests
+TEST_DATABASE_URL = "sqlite:///./test.db"
 
 engine = create_engine(TEST_DATABASE_URL, connect_args={"check_same_thread": False})
 
@@ -17,12 +17,12 @@ TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engin
 
 @pytest.fixture(scope="session", autouse=True)
 def setup_database():
-    # Create fresh schema
     Base.metadata.drop_all(bind=engine)
     Base.metadata.create_all(bind=engine)
 
-    # Seed plans
     db = TestingSessionLocal()
+
+    # Seed plans
     plans = [
         models.InsurancePlan(
             plan_name="Silver Plan",
@@ -43,6 +43,7 @@ def setup_database():
             benefits="Premium coverage",
         ),
     ]
+
     db.add_all(plans)
     db.commit()
     db.close()

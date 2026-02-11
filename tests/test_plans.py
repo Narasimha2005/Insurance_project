@@ -26,3 +26,8 @@ def test_recommended_plan(client):
     response = client.get("/recommended-plan", params={"user_id": user["id"]})
     assert response.status_code == 200
     assert "recommended_plan" in response.json()
+
+
+def test_recommended_plan_invalid_user(client):
+    response = client.get("/recommended-plan", params={"user_id": 9999})
+    assert response.status_code in (400, 404)
